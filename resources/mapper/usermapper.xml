@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jnshu.dao.UserDao">
+	<resultMap id="resultmap" type="com.jnshu.pojo.User">
+		<id column="uid" property="uid"/>
+		<result column="username" property="username"/>
+		<result column="token" property="token"/>
+		<result column="series" property="series"/>
+		<result column="longtime" property="longtime"/>
+	
+	</resultMap>
+
+<insert id="add" parameterType="com.jnshu.pojo.User">
+		insert into user (uid,username,token,series,longtime) values
+		(#{uid},#{username},#{token},#{series},#{longtime})
+		<selectKey keyProperty="uid" order="AFTER" resultType="java.lang.Long">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+
+
+
+	<select id="selectOne" parameterType="long" resultMap="resultmap">
+		select *
+		from student where uid=#{uid}
+	</select>
+
+	<select id="select" resultMap="resultmap">
+		select * from user
+	</select>
+	<select id="findUser" parameterType="com.jnshu.pojo.User" resultMap="resultmap">
+		select * from user where uid=#{uid}
+	</select>
+
+<update id="update" parameterType="com.jnshu.pojo.User">
+update user set longtime=#{longtime} where uid=#{uid}
+
+</update>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       
+       
+     <!-- sms短信服务 -->  
+       <context:property-placeholder location="classpath:alisms.properties" ignore-unresolvable="true"/>
+       <bean id="alismsbean" class="com.jnshu.util.alismsUtil.AlismsBean">
+       	<property name="accessKeyId" value="${mesg.acceKeyId}"/>
+        <property name="accessKeySecret" value="${mesg.accessKeySecret}"/>
+        <property name="signName" value="${mesg.SignName}"/>
+        <property name="templateCode" value="${mesg.TemplateCode}"/>
+        <property name="connectTimeout" value="${mesg.ConnectTimeout}"/>
+        <property name="readTimeout" value="${mesg.ReadTimeout}"/>
+       </bean>
+       
+       <context:property-placeholder location="classpath:sendcloud.properties" ignore-unresolvable="true"/>
+          <bean id="emailArgs" class="com.jnshu.util.emailUtil.EmailArgs">
+       	<property name="apiUser" value="${email.apiUser}"/>
+        <property name="apiKey" value="${email.apiKey}"/>
+        <property name="from" value="${email.from}"/>
+        <property name="fromName" value="${email.fromName}"/>
+       
+       </bean>
+       
+         <context:property-placeholder location="classpath:aliyunoos.properties" ignore-unresolvable="true"/>
+          <bean id="oosbean" class="com.jnshu.util.alioos.OosBean">
+       	<property name="accessKeyId" value="${oos.accessKeyId}"/>
+        <property name="endpoint" value="${oos.endpoint}"/>
+        <property name="accessKeySecret" value="${oos.accessKeySecret}"/>
+        <property name="bucketName" value="${oos.bucketName}"/>
+       
+       </bean>
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       </beans>

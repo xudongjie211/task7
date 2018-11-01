@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jnshu.dao.CourseDao">
+	<resultMap id="resultmap" type="com.jnshu.pojo.Course">
+		<id column="cid" property="cid"/>
+		<result column="coursename" property="coursename"/>
+		<result column="intro" property="intro"/>
+		<result column="skills" property="skills"/>
+		<result column="difficulty" property="difficulty"/>
+		<result column="growth" property="growth"/>
+		<result column="careerThreshold" property="careerThreshold"/>
+		<result column="firstSalary" property="firstSalary"/>
+		<result column="secondSalary" property="secondSalary"/>
+		<result column="thirdSalary" property="thirdSalary"/>
+		<result column="companyCount" property="companyCount"/>
+		<result column="create_at" property="create_at"/>
+		<result column="update_at" property="update_at"/>
+	</resultMap>
+
+<insert id="add" parameterType="com.jnshu.pojo.Course">
+		insert into course (coursename,intro,careerThreshold,skills,difficulty,growth,companyCount,firstSalary,secondSalary,thirdSalary,create_at) values
+		(#{coursename},#{intro},#{careerThreshold},#{skills},#{difficulty},#{growth},#{companyCount},#{firstSalary},#{secondSalary},#{thirdSalary},#{create_at})
+	<selectKey keyProperty="cid" order="AFTER" resultType="java.lang.Long">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+	<select id="selectOne" parameterType="long" resultMap="resultmap">
+		select *  from course where cid=#{cid}
+	</select>
+
+	<select id="select" resultMap="resultmap">
+		select * from course
+	</select>
+
+
+</mapper>

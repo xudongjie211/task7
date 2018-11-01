@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jnshu.dao.StudentDao">
+	<resultMap id="resultmap" type="com.jnshu.pojo.Student">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="qq" property="qq"/>
+		<result column="job" property="job"/>
+		<result column="create_at" property="create_at"/>
+		<result column="update_at" property="update_at"/>
+		<result column="password" property="password"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+		<result column="image" property="image"/>
+		<result column="code" property="code"/>
+		<result column="status" property="status"/>
+		
+	</resultMap>
+
+<insert id="add" parameterType="com.jnshu.pojo.Student">
+		insert into student (qq,name,job,create_at,update_at,password,phone,email,code,status) values
+		(#{qq},#{name},#{job},#{create_at},#{update_at},#{password},#{phone},#{email},#{code},#{status})
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+
+
+	<delete id="delete" parameterType="long">
+		delete from student where
+		id=#{id}
+	</delete>
+
+	<update id="update" parameterType="com.jnshu.pojo.Student">
+		update student set
+		qq=#{qq},name=#{name},job=#{job},update_at=#{update_at},image=#{image},status=#{status},email=#{email} where id=#{id}
+	</update>
+
+	<update id="updateImage" parameterType="com.jnshu.pojo.Student">
+		update student set
+		image=#{image} where id=#{id}
+	</update>
+
+
+
+	<select id="selectOne" parameterType="long" resultMap="resultmap">
+		select *
+		from student where id=#{id}
+	</select>
+
+	<select id="select" resultMap="resultmap">
+		select * from student
+	</select>
+	<select id="findByCode" parameterType="String"  resultMap="resultmap">
+		select * from student where code=#{code}
+	</select>
+	
+	
+	
+
+	<select id="selectLike" parameterType="String" resultMap="resultmap">
+		select * from student where name like "%"#{name}"%"
+	</select>
+	<select id="selectLogin" parameterType="com.jnshu.pojo.Student" resultMap="resultmap">
+		select * from student where name =#{name} and password=#{password}
+	</select>
+
+<select id="findByname" parameterType="String" resultMap="resultmap">
+		select * from student where name =#{name}
+	</select>
+	<select id="findByphone" parameterType="String" resultMap="resultmap">
+		select * from student where phone =#{phone}
+	</select>
+
+
+	<select id="count" resultType="int">
+		select count(*) from student
+	</select>
+
+
+
+	<delete id="deleteAll">
+		delete from student
+	</delete>
+	<delete id="back1">
+		TRUNCATE TABLE student
+	</delete>
+
+</mapper>
