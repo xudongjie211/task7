@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>    
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" 
+ "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">          
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>out</short-name>
+    <tag>
+        <name>date</name>
+        <tag-class>com.jnshu.tag.Datetag</tag-class>
+        <body-content>jsp</body-content>
+        
+<!--  <body-contnet>标签中包含的内容的解释       
+jsp：接收所有的jsp语法的内容 
+empty:开始和结束中间没有内容 
+scriptless:接收文本、el和jsp脚本 
+tagDependent:标签体内容直接写入bodyContext由自定义标签类进行处理 -->
+        
+        
+        
+        <attribute>
+            <name>name</name><!-- 属性名称 -->             
+            <required>false</required><!--是否必须  -->
+            <rtexprvalue>true</rtexprvalue>  <!-- 支持特殊表达式 -->
+        </attribute>
+    </tag>
+</taglib> 

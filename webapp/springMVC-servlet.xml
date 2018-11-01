@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
+ 	<!-- 开启扫描 --> 
+    <context:annotation-config/>
+    
+    <context:component-scan base-package="com.jnshu.web.controller">
+          <context:include-filter type="annotation"
+          expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+ 
+	<!-- 加载扫描驱动  -->
+    <!-- <mvc:annotation-driven /> -->
+    <mvc:annotation-driven >
+	   <mvc:message-converters register-defaults="true">
+	      <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+	         <property name="supportedMediaTypes" value="text/plain;charset=UTF-8" />
+	      </bean>
+	   </mvc:message-converters>    
+    </mvc:annotation-driven>
+    
+	<!-- 配置定时任务 -->
+	<!-- <task:annotation-driven/> -->
+    <!--  由于tomcat处理动态资源，当遇到静态页面时交给别的servlet来处理 -->
+    <mvc:default-servlet-handler />
+ 	<!-- <mvc:resources mapping="/imges/**" location="/imges/" /> -->
+    <!-- 视图定位 -->
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    
+    <bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"  p:order="1"/>
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>layout.xml</value>
+                
+            </list>
+        </property>
+</bean>
+
+
+<!--拦截器配置  -->
+    <mvc:interceptors>
+        
+        <mvc:interceptor>
+            <mvc:mapping path="/u/*"/>
+            <!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
+            <bean class="com.jnshu.web.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+</mvc:interceptors>
+    
+      <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+       <!--  设定默认编码 -->
+       <property name="maxUploadSize" value="20971500"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
+    
+    
+</beans>
